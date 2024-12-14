@@ -20,6 +20,9 @@ on:
       aws_account_id:
         description: 'AWS Account ID'
         required: true
+      aws_backend_bucket:
+        description: 'AWS S3 Bucket para armazenamento do estado do Terraform'
+        required: true
       aws_region:
         description: 'AWS Region'
         required: true
@@ -34,8 +37,8 @@ jobs:
       id-token: write
       contents: read
       
-    if: github.ref == 'refs/heads/main'
-    environment: prod
+#    if: github.ref == 'refs/heads/main'
+#    environment: prod
 
     steps:
 
@@ -63,9 +66,27 @@ jobs:
     - name: Verificar Credenciais AWS
       run: aws sts get-caller-identity
 
+    - name: Gerar arquivo backend.tfvars (env do Terraform Database)
+      working-directory: src/terraform
+      run: |
+          cat <<EOF > backend.tfvars
+          bucket = "${{ github.event.inputs.aws_backend_bucket }}"
+          key    = "easyorder-database/terraform.tfstate"
+          region = "${{ github.event.inputs.aws_region }}"
+          EOF
+
+    - name: Gerar arquivo external_vars.tfvars (env do Terraform Infra)
+      working-directory: src/terraform
+      run: |
+          cat <<EOF > external_vars.tfvars
+          bucket_infra = "${{ github.event.inputs.aws_backend_bucket }}"
+          key_infra    = "easyorder-infra/terraform.tfstate"
+          region = "${{ github.event.inputs.aws_region }}"
+          EOF
+    
     - name: Terraform Init
       working-directory: src/
-      run: terraform init
+      run: terraform init -backend-config=backend.tfvars
 
     - name: Terraform Validate
       working-directory: src/
@@ -73,8 +94,8 @@ jobs:
 
     - name: Terraform Plan
       working-directory: src/
-      run: terraform plan -out=plan.out
+      run: terraform plan -var-file="external_var.tfvars" -out=plan.out
 
     - name: Terraform Apply
       working-directory: src/
-      run: terraform apply -auto-approve
+      run: terraform apply -var-file="external_var.tfvars" -auto-approve

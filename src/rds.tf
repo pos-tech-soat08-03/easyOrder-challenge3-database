@@ -1,27 +1,15 @@
-provider "aws" {
-  region = var.region
-}
-
-data "terraform_remote_state" "infra" {
-  backend = "s3"
-  config = {
-    bucket = "terraform-state-easyorder-302aa67c172f4327a6a080e4856d52ce" #Deixar isso dinamico
-    key    = "easyorder-infra/terraform.tfstate"
-    region = "us-east-1"
-  }
-}
 
 # Criar um grupo de segurança para o RDS
 resource "aws_security_group" "rds_security_group" {
   name        = "rds-security-group"
   description = "Allow access to RDS"
-  vpc_id      = data.terraform_remote_state.infra.outputs.vpc_id[0]
+  vpc_id      = data.terraform_remote_state.easyorder-infra.outputs.vpc_id[0]
 
   ingress {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    security_groups = flatten(data.terraform_remote_state.infra.outputs.security_group_id) # Permitir acesso do EKS
+    security_groups = flatten(data.terraform_remote_state.easyorder-infra.outputs.security_group_id) # Permitir acesso do EKS
   }
 
   egress {
@@ -34,7 +22,7 @@ resource "aws_security_group" "rds_security_group" {
 
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name       = "rds-subnet-group"
-  subnet_ids = flatten(data.terraform_remote_state.infra.outputs.subnet_ids)
+  subnet_ids = flatten(data.terraform_remote_state.easyorder-infra.outputs.subnet_ids)
 }
 
 # Criar a instância RDS
@@ -48,6 +36,6 @@ resource "aws_db_instance" "rds_instance" {
   password                 = var.db_password
   db_name                  = var.db_name
   skip_final_snapshot      = true
-  vpc_security_group_ids    = flatten(data.terraform_remote_state.infra.outputs.security_group_id)
+  vpc_security_group_ids    = flatten(data.terraform_remote_state.easyorder-infra.outputs.security_group_id)
   db_subnet_group_name      = aws_db_subnet_group.rds_subnet_group.name
 }
