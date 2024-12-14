@@ -72,10 +72,10 @@ jobs:
           region = "${{ github.event.inputs.aws_region }}"
           EOF
 
-    - name: Gerar arquivo external_vars.tfvars (env do Terraform Infra)
+    - name: Gerar arquivo external_var.tfvars (env do Terraform Infra)
       working-directory: src/
       run: |
-          cat <<EOF > external_vars.tfvars
+          cat <<EOF > external_var.tfvars
           bucket_infra = "${{ github.event.inputs.aws_backend_bucket }}"
           key_infra    = "easyorder-infra/terraform.tfstate"
           region = "${{ github.event.inputs.aws_region }}"
