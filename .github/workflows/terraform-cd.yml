@@ -79,9 +79,9 @@ jobs:
           bucket_infra = "${{ github.event.inputs.aws_backend_bucket }}"
           key_infra    = "easyorder-infra/terraform.tfstate"
           region = "${{ github.event.inputs.aws_region }}"
-          db_name = ${{ secrets.MYSQL_DATABASE }}
-          db_username = ${{ secrets.MYSQL_USER }}
-          db_password = ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          db_name = "${{ secrets.MYSQL_DATABASE }}"
+          db_username = "${{ secrets.MYSQL_USER }}"
+          db_password = "${{ secrets.MYSQL_ROOT_PASSWORD }}"
           EOF
     
     - name: Terraform Init
@@ -94,8 +94,8 @@ jobs:
 
     - name: Terraform Plan
       working-directory: src/
-      run: terraform plan -var-file="external_var.tfvars" -out=plan.out
+      run: terraform plan -var-file=external_var.tfvars -out=plan.out
 
     - name: Terraform Apply
       working-directory: src/
-      run: terraform apply -var-file="external_var.tfvars" -auto-approve
+      run: terraform apply -var-file=external_var.tfvars -auto-approve
