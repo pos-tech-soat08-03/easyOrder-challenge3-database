@@ -16,16 +16,7 @@ variable "db_name" {
 
 variable "region" {
   type = string
-  #default = "us-east-1"
 }
-
-# variable "bucket" {
-#   description = "Bucket S3 para state do Terraform - Database (este terraform)"
-# }
-
-# variable "key" {
-#   description = "Bucket S3 para state do Terraform - Database (este terraform)"
-# }
 
 variable "bucket_infra" {
   description = "Bucket S3 para state do Terraform - Infra"
