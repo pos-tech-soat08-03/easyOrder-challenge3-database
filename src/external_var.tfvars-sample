@@ -1,0 +1,6 @@
+bucket_infra = "nome-bucket-aqui"
+key_infra = "caminho-pasta-aqui"
+region = "regiao-aqui"
+db_name = "nome-schema-aqui"
+db_username = "username-aqui"
+db_password = "senha-aqui"
