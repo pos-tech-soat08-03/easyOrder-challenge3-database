@@ -27,15 +27,15 @@ resource "aws_db_subnet_group" "rds_subnet_group" {
 
 # Criar a instância RDS
 resource "aws_db_instance" "rds_instance" {
-  identifier                = "my-rds-instance"
-  engine                   = "mysql"
-  engine_version           = "8.0"
-  instance_class           = "db.t3.micro"
-  allocated_storage         = 20
-  username                 = var.db_username
-  password                 = var.db_password
-  db_name                  = var.db_name
-  skip_final_snapshot      = true
-  vpc_security_group_ids    = flatten(data.terraform_remote_state.easyorder-infra.outputs.security_group_id)
-  db_subnet_group_name      = aws_db_subnet_group.rds_subnet_group.name
+  identifier             = "my-rds-instance"
+  engine                 = "mysql"
+  engine_version         = "8.0"
+  instance_class         = "db.t3.micro"
+  allocated_storage      = 20
+  username               = var.db_username
+  password               = var.db_password
+  db_name                = var.db_name
+  skip_final_snapshot    = true
+  vpc_security_group_ids = flatten(data.terraform_remote_state.easyorder-infra.outputs.security_group_id)
+  db_subnet_group_name   = aws_db_subnet_group.rds_subnet_group.name
 }

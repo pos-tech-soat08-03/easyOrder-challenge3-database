@@ -5,13 +5,13 @@ output "rds_db_name" {
 
 output "rds_username" {
   description = "Usuário do RDS MySQL"
-  value = aws_db_instance.rds_instance.username
+  value       = aws_db_instance.rds_instance.username
 }
 
 output "rds_password" {
   description = "Senha do RDS MySQL"
-  value = aws_db_instance.rds_instance.password
-  sensitive = true
+  value       = aws_db_instance.rds_instance.password
+  sensitive   = true
 }
 
 output "rds_instance_id" {

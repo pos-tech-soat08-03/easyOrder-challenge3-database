@@ -64,7 +64,7 @@ jobs:
       run: aws sts get-caller-identity
 
     - name: Gerar arquivo backend.tfvars (env do Terraform Database)
-      working-directory: src/terraform
+      working-directory: src/
       run: |
           cat <<EOF > backend.tfvars
           bucket = "${{ github.event.inputs.aws_backend_bucket }}"
@@ -73,7 +73,7 @@ jobs:
           EOF
 
     - name: Gerar arquivo external_vars.tfvars (env do Terraform Infra)
-      working-directory: src/terraform
+      working-directory: src/
       run: |
           cat <<EOF > external_vars.tfvars
           bucket_infra = "${{ github.event.inputs.aws_backend_bucket }}"
