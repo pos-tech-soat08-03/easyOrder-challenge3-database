@@ -36,9 +36,6 @@ jobs:
     permissions:
       id-token: write
       contents: read
-      
-#    if: github.ref == 'refs/heads/main'
-#    environment: prod
 
     steps:
 
@@ -82,9 +79,9 @@ jobs:
           bucket_infra = "${{ github.event.inputs.aws_backend_bucket }}"
           key_infra    = "easyorder-infra/terraform.tfstate"
           region = "${{ github.event.inputs.aws_region }}"
-          mysql_database = "easyorder_database_schema"
-          mysql_user = "easyorder_database_username"
-          mysql_password = "easyorder_database_password_10"
+          db_name = ${{ secrets.MYSQL_DATABASE }}
+          db_username = ${{ secrets.MYSQL_USER }}
+          db_password = ${{ secrets.MYSQL_ROOT_PASSWORD }}
           EOF
     
     - name: Terraform Init

@@ -1,2 +1,6 @@
-bucket = "terraform-state-easyorder-5863bb9f8df64357a7bd640cd61187d4"
-region = "us-east-1"
+bucket_infra = "nome-bucket-aqui"
+key_infra = "caminho-pasta-aqui"
+region = "regiao-aqui"
+db_name = "nome-schema-aqui"
+db_username = "username-aqui"
+db_password = "senha-aqui"
