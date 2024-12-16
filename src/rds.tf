@@ -6,12 +6,11 @@ resource "aws_security_group" "rds_security_group" {
   vpc_id      = data.terraform_remote_state.easyorder-infra.outputs.vpc_id
 
   ingress {
-    from_port       = 3306
-    to_port         = 3306
-    protocol        = "tcp"
-    security_groups = [data.terraform_remote_state.easyorder-infra.outputs.security_group_id] # Permitir acesso do EKS
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    #security_groups = [data.terraform_remote_state.easyorder-infra.outputs.security_group_id] # Permitir acesso do EKS
     cidr_blocks = ["0.0.0.0/0"]
-
   }
 
   egress {
@@ -40,4 +39,6 @@ resource "aws_db_instance" "rds_instance" {
   skip_final_snapshot    = true
   vpc_security_group_ids = [aws_security_group.rds_security_group.id]
   db_subnet_group_name   = aws_db_subnet_group.rds_subnet_group.name
+  publicly_accessible    = true
 }
+
