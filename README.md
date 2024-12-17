@@ -23,20 +23,20 @@ O repositório possui um workflow de CI/CD configurado com o Github Actions, que
 
 O workflow de CI é acionado a cada push no repositório, e executa as seguintes etapas:
 
-<ADICIONAR>
+![alt text](img/image.png)
 
 O workflow de CD é acionado manualmente, e executa as seguintes etapas:
 
-<ADICIONAR>
+![alt text](img/image2.png)
 
-## Subindo a infraestrutura com o Github Actions (Produção)
+## Subindo o RDS com o Github Actions (Produção)
 
-Para subir a infraestrutura com o Github Actions, siga os passos abaixo:
+Para subir o RDS com o Github Actions, siga os passos abaixo:
 
 1. Acesse o repositório do Github e clique na aba `Actions`, ou acesse diretamente o link abaixo:
  https://github.com/pos-tech-soat08-03/easyOrder-challenge3-database/actions
 
-2. Clique no workflow `Terraform CD - Deploy Database` e em seguida clique no botão `Run workflow`
+1. Clique no workflow `Terraform CD - Deploy Database` e em seguida clique no botão `Run workflow`
 
 O workflow irá solicitar as chaves de acesso da AWS, que serão obtidas do ambiente do AWS Labs, e também o nome do bucket anteriormente criado no S3, que  armazena o estado do Terraform da Infraestrutura necessária para a subida do RDS:
 
@@ -51,9 +51,9 @@ aws_region: <'AWS Region>
 
 Ao final da execução do workflow, o Banco de Dados será criado na AWS, e o estado do Terraform com dados da instância será armazenado no bucket S3 (mesmo utilizado na Infraestrutura).
 
-## Subindo o Database manualmente (Desenvolvimento)
+## Subindo o RDS manualmente (Desenvolvimento)
 
-Para subir o banco de dados manualmente, siga os passos abaixo:
+Para subir o banco de dados RDS manualmente, siga os passos abaixo:
 
 1. Garanta as credenciais da AWS já estejam configuradas no seu ambiente
 
@@ -61,15 +61,15 @@ Para subir o banco de dados manualmente, siga os passos abaixo:
 aws configure
 ```
 
-2. Adicione o nome do bucket S3 (mesmo da Infraestrutura) no arquivo `backend.tf` ao diretório `src/terraform`:
+2. Adicione o nome do bucket S3 (mesmo da Infraestrutura) no arquivo `backend.tf` ao diretório `src/terraform` (embora utilizem o mesmo bucket, as chaves de acesso são diferentes):
 
 ``` hcl
 bucket = "<adicione aqui o nome do bucket>"
-key    = "easyorder-infra/terraform.tfstate"
+key    = "easyorder-database/terraform.tfstate"
 region = "us-east-1"
 ```
 
-3. Adicione o nome do bucket S3 (mesmo da Infraestrutura) e das credenciais de Banco desejadas no arquivo `external_var.tfvars` ao diretório `src/terraform`:
+1. Adicione o nome do bucket S3 (mesmo da Infraestrutura) e das credenciais de Banco desejadas no arquivo `external_var.tfvars` ao diretório `src/terraform`:
 
 ``` hcl
 bucket_infra = "<adicione aqui o nome do bucket>"
@@ -94,9 +94,9 @@ terraform plan -var-file=external_var.tfvars
 terraform apply -var-file=external_var.tfvars -auto-approve
 ``` 
 
-Com essa sequência de comandos, o Banco de Dados RDS será criado, e o estado do Terraform será armazenado no bucket criado no S3, na chave `easyorder-infra/terraform.tfstate`. As informações essenciais também serão apresentadas no output do comando.
+Com essa sequência de comandos, o Banco de Dados RDS será criado, e o estado do Terraform será armazenado no bucket criado no S3, na chave `easyorder-database/terraform.tfstate`. As informações essenciais também serão apresentadas no output do comando.
 
-## Destruindo a infraestrutura
+## Destruindo o RDS
 
 Para destruir a infraestrutura, execute o comando abaixo no diretório `src/terraform`:
 
@@ -106,5 +106,5 @@ terraform destroy -var-file=external_var.tfvars
 
 ## Documentação
 
-Para mais informações sobre a arquitetura, verifique no repositório do desafio 3 (aplicação):
+Para mais informações sobre a arquitetura da solução, verifique no repositório do desafio 3 (aplicação):
 https://github.com/pos-tech-soat08-03/easyOrder-challenge3-application
