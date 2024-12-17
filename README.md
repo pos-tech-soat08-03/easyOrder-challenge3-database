@@ -19,7 +19,7 @@ src                         - diretório principal com arquivos .tf
 
 ## Estrutura Database
 
-Foi utilizado o banco de dados em MySQL e as seguintes características influenciaram na escolha.
+Foi utilizado o banco de dados em MySQL dentro do RDS e as seguintes características influenciaram na escolha.
 - **Desempenho Eficiente**: Ideal para aplicações que requerem respostas rápidas.
 - **Escalabilidade**: Suporta crescimento vertical e horizontal.
 - **Licenciamento**: Solução de código aberto, reduzindo custos.
@@ -32,6 +32,11 @@ Foi utilizado o banco de dados em MySQL e as seguintes características influenc
 - **Read Replicas**: Escala operações de leitura facilmente.
 - **Comunidade Ativa**: Suporte, plugins e ferramentas adicionais disponíveis.
 - **Suporte AWS**: Guias de melhores práticas e suporte técnico robusto.
+
+## Diagrama Modelagem de dados
+
+Foi utilizado o banco de dados MySQL por concluirmos que, pela quantidade de entidades utilizadas, o banco Relacional seria o mais adequado para a aplicação. Nessa linha de entendimento desenvolvemos um diagrama MER:
+![Captura de tela 2024-12-17 180605](https://github.com/user-attachments/assets/0c8e7a63-1cf8-4801-845f-ba0784e1df83)
 
 ## Configuração do CI/CD
 
