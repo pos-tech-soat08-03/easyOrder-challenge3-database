@@ -17,6 +17,22 @@ src                         - diretório principal com arquivos .tf
     └── *.tf                - arquivos de configuração do Terraform
 ```
 
+## Estrutura Database
+
+Foi utilizado o banco de dados em MySQL e as seguintes características influenciaram na escolha.
+- **Desempenho Eficiente**: Ideal para aplicações que requerem respostas rápidas.
+- **Escalabilidade**: Suporta crescimento vertical e horizontal.
+- **Licenciamento**: Solução de código aberto, reduzindo custos.
+- **Preços Competitivos**: Várias opções de instâncias para otimizar custos.
+- **Familiaridade**: Amplamente utilizado, com vasta documentação.
+- **Backups Automatizados**: Configuração simples de backups e restauração.
+- **Integração com AWS IAM**: Controle de acesso seguro.
+- **Criptografia**: Dados criptografados em repouso e em trânsito.
+- **Replicação Master-Slave**: Distribuição de carga de leitura.
+- **Read Replicas**: Escala operações de leitura facilmente.
+- **Comunidade Ativa**: Suporte, plugins e ferramentas adicionais disponíveis.
+- **Suporte AWS**: Guias de melhores práticas e suporte técnico robusto.
+
 ## Configuração do CI/CD
 
 O repositório possui um workflow de CI/CD configurado com o Github Actions, que realiza a validação e deploy do RDS na AWS.
