@@ -81,7 +81,7 @@ jobs:
           region = "${{ github.event.inputs.aws_region }}"
           db_name = "${{ secrets.MYSQL_DATABASE }}"
           db_username = "${{ secrets.MYSQL_USER }}"
-          db_password = "${{ secrets.MYSQL_ROOT_PASSWORD }}"
+          db_password = "${{ secrets.MYSQL_PASSWORD }}"
           EOF
     
     - name: Terraform Init
