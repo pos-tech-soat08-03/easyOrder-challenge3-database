@@ -10,7 +10,7 @@ resource "aws_security_group" "rds_security_group" {
     to_port         = 0
     protocol        = "-1"
     security_groups = [data.terraform_remote_state.easyorder-infra.outputs.security_group_id] # Permitir acesso do EKS
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks     = ["0.0.0.0/0"]
   }
 
   egress {
