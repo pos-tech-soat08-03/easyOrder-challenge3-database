@@ -64,7 +64,7 @@ jobs:
       run: aws sts get-caller-identity
 
     - name: Gerar arquivo backend.tfvars (env do Terraform Database)
-      working-directory: src/
+      working-directory: src/terraform/
       run: |
           cat <<EOF > backend.tfvars
           bucket = "${{ github.event.inputs.aws_backend_bucket }}"
@@ -73,7 +73,7 @@ jobs:
           EOF
 
     - name: Gerar arquivo external_var.tfvars (env do Terraform Infra)
-      working-directory: src/
+      working-directory: src/terraform/
       run: |
           cat <<EOF > external_var.tfvars
           bucket_infra = "${{ github.event.inputs.aws_backend_bucket }}"
@@ -85,17 +85,17 @@ jobs:
           EOF
     
     - name: Terraform Init
-      working-directory: src/
+      working-directory: src/terraform/
       run: terraform init -backend-config=backend.tfvars
 
     - name: Terraform Validate
-      working-directory: src/
+      working-directory: src/terraform/
       run: terraform validate
 
     - name: Terraform Plan
-      working-directory: src/
+      working-directory: src/terraform/
       run: terraform plan -var-file=external_var.tfvars -out=plan.out
 
     - name: Terraform Apply
-      working-directory: src/
+      working-directory: src/terraform/
       run: terraform apply -var-file=external_var.tfvars -auto-approve
